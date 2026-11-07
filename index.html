@@ -1,152 +1,35 @@
 <!doctype html>
-<html lang="ko">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>야구 기록지</title>
-<style id="css">
-:root{--bg:#f6f7f4;--fg:#1d2420;--card:#fff;--line:#d9ddd5;--mut:#6b756d;--ac:#1f6b3a;--acfg:#fff;--dg:#b3261e;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121613;--fg:#e8ede9;--card:#1b211d;--line:#2f3832;--mut:#98a39b;--ac:#4fb26f;--acfg:#08130c;--dg:#f08a82;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#121613;--fg:#e8ede9;--card:#1b211d;--line:#2f3832;--mut:#98a39b;--ac:#4fb26f;--acfg:#08130c;--dg:#f08a82;color-scheme:dark}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,"Noto Sans KR","Malgun Gothic",sans-serif;line-height:1.5}
-main{max-width:900px;margin:0 auto;padding:16px 16px 80px}
-h1{font-size:1.4rem;margin:8px 0 16px}h2{font-size:1rem;margin:0 0 8px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:14px}
-.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-label{display:flex;flex-direction:column;font-size:.8rem;color:var(--mut);flex:1;min-width:130px}
-input{font:inherit;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:6px 8px;min-width:0}
-.b{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:8px;padding:6px 12px}
-.b.p{background:var(--ac);color:var(--acfg);border-color:var(--ac)}.b.d{color:var(--dg)}
-.sc{overflow-x:auto}
-table{border-collapse:collapse;width:100%;font-size:.9rem}
-th,td{border:1px solid var(--line);padding:3px 5px;text-align:center;white-space:nowrap;min-width:2em}
-th{background:var(--bg);color:var(--mut);font-weight:600;font-size:.8rem}
-td input{width:2.8em;text-align:center;padding:4px 2px;border-radius:4px}
-td input.nm{width:6.5em;text-align:left;padding:4px 6px}
-td.t{text-align:left;padding:4px 8px;font-weight:600}
-.tot td{font-weight:700;background:var(--bg)}
-.g{display:flex;justify-content:space-between;align-items:center;cursor:pointer}
-.g:hover{border-color:var(--ac)}
-.sc2{font-size:1.2rem;font-weight:700}.mut{color:var(--mut);font-size:.85rem}
-.bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.sv{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:var(--card);border-top:1px solid var(--line)}
-</style>
-</head>
-<body>
-<main id="app"></main>
-<script id="data" type="application/json">{"games":[]}</script>
-<script id="code">
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DIAMOND 야구 기록실</title>
+<style>
+:root{--bg:#f3f6f4;--card:#fff;--ink:#17251d;--muted:#68766d;--line:#dce5de;--green:#176b42;--soft:#e7f3eb;--red:#b63c36}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,"Malgun Gothic",sans-serif}header{background:#102f22;color:white;padding:22px max(18px,calc((100% - 1100px)/2))}header small{color:#b7d8c4;letter-spacing:2px}header h1{margin:5px 0;font-size:25px}header p{margin:0;color:#c8ded0;font-size:13px}.wrap{max-width:1100px;margin:auto;padding:18px}.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}.tabs{display:flex;gap:7px;flex-wrap:wrap}.tab,button{border:1px solid var(--line);border-radius:9px;padding:10px 13px;background:white;color:var(--ink);font-weight:700;cursor:pointer}.tab.active,button.primary{background:var(--green);color:white;border-color:var(--green)}button.danger{color:var(--red)}button:disabled{opacity:.45;cursor:not-allowed}.panel,.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:13px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.field{display:flex;flex-direction:column;gap:5px;font-size:13px;color:var(--muted)}input,select,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;font:inherit;color:var(--ink);background:white}textarea{min-height:75px;resize:vertical}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.muted{color:var(--muted);font-size:13px}.tag{display:inline-block;background:var(--soft);color:var(--green);padding:4px 8px;border-radius:20px;font-size:12px;font-weight:bold}.room{display:flex;justify-content:space-between;align-items:center;gap:12px;cursor:pointer}.room h3{margin:0 0 5px}.score{font-size:24px;font-weight:900;white-space:nowrap}.tablewrap{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:13px}th,td{border:1px solid var(--line);padding:7px;text-align:center;white-space:nowrap}th{background:#edf4ef;color:#40564a}td input{min-width:48px;padding:6px;text-align:center}.left{text-align:left}.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:2px 0 10px}.section-title h2{font-size:18px;margin:0}.hidden{display:none!important}.alarm{border-left:4px solid var(--green)}.alarm h3{margin:0 0 5px}.empty{text-align:center;color:var(--muted);padding:30px 12px}.footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}.mode{font-size:12px}.small{font-size:12px;padding:6px 9px}@media(max-width:600px){header{padding:18px}.wrap{padding:12px}.panel,.card{padding:12px}.tab{padding:9px 10px;font-size:13px}}
+</style></head><body>
+<header><small>DIAMOND BASEBALL</small><h1>⚾ 야구 기록실</h1><p>경기 기록 · 시즌 순위 · 경기 일정 알림</p></header>
+<div class="wrap"><div class="top"><div class="tabs"><button class="tab active" data-tab="rooms">경기방</button><button class="tab" data-tab="rank">시즌 순위</button><button class="tab" data-tab="alarms">경기 알람방</button></div><div><span id="mode" class="tag mode">보기 모드</span> <button id="login" class="small">편집 모드</button></div></div>
+<main id="app"></main><div class="footer">DIAMOND 야구 기록실 · 이 브라우저에 자동 저장됩니다.</div></div>
+<script>
+const KEY='diamond_new_record_room_v1', PIN='0701';
 const $=s=>document.querySelector(s);
-const sum=a=>a.reduce((s,v)=>s+(+v||0),0);
-const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
-const NM={a:'away',h:'home'},DEF={a:'원정',h:'홈'},T=['a','h'];
-const F=['ab','h','hr','rbi','bb','k','r'],P=['ip','h','r','er','bb','k','hr'];
-let S={games:[]},EDIT=false,dirty=false,saving=false,armed=false;
-try{S=JSON.parse($('#data').textContent)}catch(e){}
-const team=()=>Array.from({length:9},()=>({n:'',ab:0,h:0,hr:0,rbi:0,bb:0,k:0,r:0}));
-const newP=()=>({n:'',res:'',ip:'',h:0,r:0,er:0,bb:0,k:0,hr:0});
-const norm=g=>{g.pit=g.pit||{a:[],h:[]};T.forEach(t=>g.bat[t].forEach(p=>{p.hr=p.hr||0}));return g};
-S.games.forEach(norm);
-const score=(g,t)=>sum(g.inn[t]);
-const name=(g,t)=>g[NM[t]]||DEF[t];
-const th=v=>{const x=parseFloat(v)||0,w=Math.floor(x);return w*3+Math.round((x-w)*10)};
-const fip=t=>Math.floor(t/3)+'.'+t%3;
-const era=(er,t)=>t>0?(er*27/t).toFixed(2):'-';
-const avg=(h,ab)=>ab>0?(h/ab).toFixed(3).replace(/^0/,''):'-';
-const A=(k,t,i,f)=>`data-k="${k}" data-t="${t}" data-i="${i}"${f?` data-f="${f}"`:''}`;
-const s=(a,v,c)=>EDIT?`<input${c?` class="${c}"`:''} ${a} value="${esc(v)}">`:esc(v);
-const n=(a,v)=>EDIT?`<input inputmode="numeric" ${a} value="${v||''}">`:(v||0);
-
-function render(h){
-  $('#app').innerHTML=h+(EDIT?'':'<p style="text-align:center;margin-top:28px"><button class="b" onclick="unlock()">🔒 편집</button></p>')+(EDIT?`<div class="sv"><span id="st" class="mut"></span><button class="b p" onclick="pub()">index.html 내려받기</button></div>`:'');
-  setSt();
-}
-function setSt(){const e=$('#st');if(e)e.textContent=dirty?'● 아직 내려받지 않은 변경이 있어요':'변경 없음'}
-
-function home(){
-  let h=`<h1>⚾ 야구 기록지</h1><div class="bar"><span class="mut">경기 ${S.games.length}개 · ${EDIT?'편집 모드':'보기 전용'}</span>${EDIT?'<button class="b p" onclick="add()">+ 새 경기</button>':''}</div>`;
-  if(!S.games.length)h+=`<div class="card mut">아직 등록된 경기가 없습니다.</div>`;
-  for(const g of S.games)h+=`<div class="card g" onclick="location.hash='g${g.id}'"><div><b>${esc(name(g,'a'))} vs ${esc(name(g,'h'))}</b><div class="mut">${esc(g.date)} ${esc(g.place)}</div></div><div class="sc2">${score(g,'a')} : ${score(g,'h')}</div></div>`;
-  render(h);
-}
-function add(){
-  const g=norm({id:Date.now(),date:new Date().toISOString().slice(0,10),place:'',away:'',home:'',inn:{a:Array(9).fill(''),h:Array(9).fill('')},bat:{a:team(),h:team()}});
-  S.games.unshift(g);dirty=true;location.hash='g'+g.id;
-}
-function del(id){
-  if(!armed){armed=true;$('#del').textContent='정말 삭제?';return}
-  S.games=S.games.filter(x=>x.id!==id);dirty=true;location.hash='';
-}
-const cg=()=>S.games.find(x=>'#g'+x.id===location.hash);
-function addP(t){cg().pit[t].push(newP());dirty=true;detail(cg())}
-function delP(t,i){cg().pit[t].splice(i,1);dirty=true;detail(cg())}
-
-function detail(g){
-  armed=false;
-  let h=`<div class="bar"><button class="b" onclick="location.hash=''">← 목록</button>${EDIT?`<button class="b d" id="del" onclick="del(${g.id})">삭제</button>`:''}</div><div class="card"><div class="row">`;
-  h+=EDIT?[['날짜','date','date'],['장소','place',''],['원정팀','away',''],['홈팀','home','']].map(([l,k,ty])=>`<label>${l}<input ${ty?`type="${ty}" `:''}data-k="${k}" value="${esc(g[k])}"></label>`).join(''):`<b>${esc(name(g,'a'))} vs ${esc(name(g,'h'))}</b><span class="mut">${esc(g.date)} ${esc(g.place)}</span>`;
-  h+=`</div></div><div class="card"><h2>이닝별 점수</h2><div class="sc"><table><tr><th>팀</th>${[1,2,3,4,5,6,7,8,9].map(i=>`<th>${i}</th>`).join('')}<th>R</th><th>H</th></tr>`;
-  for(const t of T)h+=`<tr><td class="t" data-nm="${t}"></td>${g.inn[t].map((v,i)=>`<td>${EDIT?`<input inputmode="numeric" ${A('inn',t,i)} value="${esc(v)}">`:(esc(v)||'-')}</td>`).join('')}<td><b id="R${t}"></b></td><td id="H${t}"></td></tr>`;
-  h+=`</table></div></div>`;
-  for(const t of T){
-    h+=`<div class="card"><h2><span data-nm="${t}"></span> 타자 기록</h2><div class="sc"><table><tr><th>타순</th><th>이름</th><th>타수</th><th>안타</th><th>홈런</th><th>타점</th><th>볼넷</th><th>삼진</th><th>득점</th><th>타율</th></tr>`;
-    g.bat[t].forEach((p,i)=>{
-      h+=`<tr><td>${i+1}</td><td>${s(A('bat',t,i,'n'),p.n,'nm')}</td>`;
-      for(const f of F)h+=`<td>${n(A('bat',t,i,f),p[f])}</td>`;
-      h+=`<td id="A${t}${i}"></td></tr>`;
-    });
-    h+=`<tr class="tot"><td colspan="2">합계</td>${F.map(f=>`<td id="T${t}${f}"></td>`).join('')}<td id="TA${t}"></td></tr></table></div></div>`;
-    h+=`<div class="card"><h2><span data-nm="${t}"></span> 투수 기록</h2><div class="sc"><table><tr><th>투수</th><th>결과</th><th>이닝</th><th>피안타</th><th>실점</th><th>자책</th><th>볼넷</th><th>삼진</th><th>피홈런</th><th>방어율</th>${EDIT?'<th></th>':''}</tr>`;
-    g.pit[t].forEach((p,i)=>{
-      h+=`<tr><td>${s(A('pit',t,i,'n'),p.n,'nm')}</td><td>${s(A('pit',t,i,'res'),p.res)}</td>`;
-      for(const f of P)h+=`<td>${f==='ip'?s(A('pit',t,i,'ip'),p.ip):n(A('pit',t,i,f),p[f])}</td>`;
-      h+=`<td id="E${t}${i}"></td>${EDIT?`<td><button class="b" onclick="delP('${t}',${i})">✕</button></td>`:''}</tr>`;
-    });
-    h+=`<tr class="tot"><td colspan="2">합계</td>${P.map(f=>`<td id="PT${t}${f}"></td>`).join('')}<td id="PE${t}"></td>${EDIT?'<td></td>':''}</tr></table></div>${EDIT?`<p><button class="b" onclick="addP('${t}')">+ 투수 추가</button></p>`:''}<div class="mut">이닝은 5.1 = 5⅓이닝, 5.2 = 5⅔이닝처럼 입력하세요.</div></div>`;
-  }
-  render(h);totals(g);
-}
-function totals(g){
-  document.querySelectorAll('[data-nm]').forEach(e=>e.textContent=name(g,e.dataset.nm));
-  for(const t of T){
-    const b=g.bat[t],q=g.pit[t],hh=sum(b.map(p=>p.h)),ab=sum(b.map(p=>p.ab));
-    $('#R'+t).textContent=score(g,t);$('#H'+t).textContent=hh;
-    b.forEach((p,i)=>$('#A'+t+i).textContent=avg(p.h,p.ab));
-    for(const f of F)$('#T'+t+f).textContent=sum(b.map(p=>p[f]));
-    $('#TA'+t).textContent=avg(hh,ab);
-    const ti=sum(q.map(p=>th(p.ip))),er=sum(q.map(p=>p.er));
-    q.forEach((p,i)=>$('#E'+t+i).textContent=era(+p.er||0,th(p.ip)));
-    for(const f of P)$('#PT'+t+f).textContent=f==='ip'?fip(ti):sum(q.map(p=>p[f]));
-    $('#PE'+t).textContent=era(er,ti);
-  }
-}
-document.addEventListener('input',e=>{
-  const el=e.target,d=el.dataset,g=EDIT&&cg();
-  if(!g||!d.k)return;
-  const txt=['n','res','ip'].includes(d.f);
-  if(d.k==='inn')g.inn[d.t][d.i]=el.value;
-  else if(d.k==='bat'||d.k==='pit')(d.k==='bat'?g.bat:g.pit)[d.t][d.i][d.f]=txt?el.value:(+el.value||0);
-  else g[d.k]=el.value;
-  dirty=true;setSt();totals(g);
-});
-function route(){const g=cg();g?detail(g):home()}
-window.addEventListener('hashchange',route);
-
-function build(){
-  const j=JSON.stringify(S).replace(/</g,'\\u003c');
-  return '<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>야구 기록지</title><style id="css">'+$('#css').textContent+'</style></head><body><main id="app"></main><script id="data" type="application/json">'+j+'<\/script><script id="code">'+$('#code').textContent+'<\/script></body></html>';
-}
-function pub(){
-  const url=URL.createObjectURL(new Blob([build()],{type:'text/html'}));
-  const l=document.createElement('a');l.href=url;l.download='index.html';document.body.appendChild(l);l.click();l.remove();
-  dirty=false;setSt();$('#st').textContent='index.html을 내려받았어요. 호스팅의 기존 파일과 교체해 올리세요.';
-}
-const H=x=>{let h=5381;for(const c of x)h=(h*33^c.charCodeAt(0))>>>0;return h};
-function unlock(){const p=prompt('편집 비밀번호를 입력하세요');if(p===null)return;if(H(p)===2085844611){try{sessionStorage.setItem('ok','1')}catch(e){}EDIT=true;route()}else alert('비밀번호가 맞지 않아요')}
-try{EDIT=sessionStorage.getItem('ok')==='1'}catch(e){}
-route();
-</script>
-</body>
-</html>
+let state=load(), edit=false, tab='rooms', opened=null;
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{rooms:[],alarms:[]}}catch(e){return{rooms:[],alarms:[]}}}
+function save(){localStorage.setItem(KEY,JSON.stringify(state))}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function field(label,key,value,type='text'){return '<label class="field">'+label+'<input data-key="'+key+'" type="'+type+'" value="'+esc(value)+'" '+(!edit?'disabled':'')+'></label>'}
+function btn(label,fn,cls=''){return '<button class="'+cls+'" data-action="'+fn+'">'+label+'</button>'}
+function sum(a){return a.reduce((n,x)=>n+(Number(x)||0),0)}
+function newPlayer(){return {name:'',ab:0,h:0,hr:0,rbi:0,bb:0,so:0,r:0,ip:0,er:0,ph:0,pk:0}}
+function makeRoom(){const id=Date.now();state.rooms.unshift({id,name:'새 경기방',date:new Date().toISOString().slice(0,10),opponent:'',venue:'',home:'우리 팀',away:'상대 팀',scoreHome:Array(9).fill(''),scoreAway:Array(9).fill(''),players:Array.from({length:9},newPlayer),pitchers:[]});save();opened=id;render()}
+function room(){return state.rooms.find(x=>x.id===opened)}
+function render(){document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));$('#mode').textContent=edit?'편집 모드':'보기 모드';$('#login').textContent=edit?'보기 모드로 전환':'편집 모드';if(tab==='rooms')renderRooms();if(tab==='rank')renderRank();if(tab==='alarms')renderAlarms()}
+function renderRooms(){const r=room();if(r){$('#app').innerHTML=roomView(r);return}let h='<div class="section-title"><h2>경기방 목록</h2>'+ (edit?btn('+ 경기방 만들기','new','primary'):'')+'</div>';if(!state.rooms.length)h+='<div class="panel empty">아직 경기방이 없습니다.'+(edit?'<br>편집 모드에서 새 경기방을 만들어 보세요.':'')+'</div>';state.rooms.forEach(x=>h+='<div class="panel room" data-open="'+x.id+'"><div><h3>'+esc(x.name)+'</h3><div class="muted">'+esc(x.date)+' · '+esc(x.venue)+' · '+esc(x.home)+' vs '+esc(x.away)+'</div></div><div class="score">'+sum(x.scoreHome)+' : '+sum(x.scoreAway)+'　›</div></div>');$('#app').innerHTML=h}
+function roomView(r){let h='<div class="actions">'+btn('← 경기방 목록','back')+(edit?btn('경기방 삭제','deleteRoom','danger'):'')+'</div><div class="panel"><div class="section-title"><h2>경기 정보</h2><span class="tag">'+(edit?'수정 가능':'보기 전용')+'</span></div><div class="grid">'+field('경기방 이름','name',r.name)+field('경기 날짜','date',r.date,'date')+field('장소','venue',r.venue)+field('홈팀','home',r.home)+field('원정팀','away',r.away)+'</div></div>';
+h+='<div class="panel"><div class="section-title"><h2>이닝별 점수</h2></div><div class="tablewrap"><table><tr><th>팀</th>'+Array.from({length:9},(_,i)=>'<th>'+(i+1)+'</th>').join('')+'<th>R</th></tr>';[['away',r.scoreAway],['home',r.scoreHome]].forEach(([k,a])=>{h+='<tr><th>'+esc(r[k])+'</th>'+a.map((v,i)=>'<td><input data-score="'+k+'" data-i="'+i+'" value="'+esc(v)+'" '+(!edit?'disabled':'')+'></td>').join('')+'<td><b>'+sum(a)+'</b></td></tr>'});h+='</table></div></div>';
+h+='<div class="panel"><div class="section-title"><h2>타자 기록</h2>'+(edit?btn('+ 선수 추가','addBatter'):'')+'</div><div class="tablewrap"><table><tr><th>선수</th><th>타수</th><th>안타</th><th>홈런</th><th>타점</th><th>볼넷</th><th>삼진</th><th>득점</th><th>타율</th></tr>';r.players.forEach((p,i)=>{h+='<tr><td><input data-player="name" data-i="'+i+'" value="'+esc(p.name)+'" '+(!edit?'disabled':'')+'></td>';['ab','h','hr','rbi','bb','so','r'].forEach(k=>h+='<td><input type="number" min="0" data-player="'+k+'" data-i="'+i+'" value="'+(p[k]||0)+'" '+(!edit?'disabled':'')+'></td>');h+='<td>'+((p.ab>0)?(p.h/p.ab).toFixed(3).replace(/^0/,''):'.000')+'</td></tr>'});h+='</table></div></div>';
+h+='<div class="panel"><div class="section-title"><h2>투수 기록</h2>'+(edit?btn('+ 투수 추가','addPitcher'):'')+'</div><div class="tablewrap"><table><tr><th>투수</th><th>이닝</th><th>자책점</th><th>피안타</th><th>삼진</th><th>방어율</th></tr>';r.pitchers.forEach((p,i)=>{h+='<tr>';['name','ip','er','ph','pk'].forEach(k=>h+='<td><input '+(k==='name'?'':'type="number" min="0" step="0.1"')+' data-pitcher="'+k+'" data-i="'+i+'" value="'+esc(p[k]||'')+'" '+(!edit?'disabled':'')+'></td>');h+='<td>'+(p.ip>0?(p.er*9/p.ip).toFixed(2):'-')+'</td></tr>'});h+='</table></div><p class="muted">투수 이닝은 소수점으로 입력하세요. 예: 5.0이닝</p></div>';return h}
+function renderRank(){let bats=[],pits=[];state.rooms.forEach(r=>{r.players.forEach(p=>{if(p.name)bats.push({...p,team:r.home,game:r.name})});r.pitchers.forEach(p=>{if(p.name)pits.push({...p,team:r.home,game:r.name})})});let agg={};bats.forEach(p=>{let x=agg[p.name]||(agg[p.name]={name:p.name,ab:0,h:0,hr:0,rbi:0,bb:0,so:0,r:0});['ab','h','hr','rbi','bb','so','r'].forEach(k=>x[k]+=Number(p[k])||0)});let ba=Object.values(agg).sort((a,b)=>(b.ab?b.h/b.ab:0)-(a.ab?a.h/a.ab:0));let ph={};pits.forEach(p=>{let x=ph[p.name]||(ph[p.name]={name:p.name,ip:0,er:0,ph:0,pk:0});['ip','er','ph','pk'].forEach(k=>x[k]+=Number(p[k])||0)});let pa=Object.values(ph).sort((a,b)=>(a.ip?a.er*9/a.ip:999)-(b.ip?b.er*9/b.ip:999));let h='<div class="panel"><div class="section-title"><h2>시즌 타격 순위</h2><span class="muted">등록된 모든 경기방 합산</span></div><div class="tablewrap"><table><tr><th>순위</th><th>선수</th><th>타수</th><th>안타</th><th>타율</th><th>홈런</th><th>타점</th><th>볼넷</th><th>삼진</th><th>득점</th></tr>';ba.forEach((p,i)=>h+='<tr><td>'+(i+1)+'</td><td>'+esc(p.name)+'</td><td>'+p.ab+'</td><td>'+p.h+'</td><td>'+(p.ab?(p.h/p.ab).toFixed(3).replace(/^0/,''):'.000')+'</td><td>'+p.hr+'</td><td>'+p.rbi+'</td><td>'+p.bb+'</td><td>'+p.so+'</td><td>'+p.r+'</td></tr>');if(!ba.length)h+='<tr><td colspan="10">기록이 아직 없습니다.</td></tr>';h+='</table></div></div><div class="panel"><div class="section-title"><h2>시즌 투수 순위</h2></div><div class="tablewrap"><table><tr><th>순위</th><th>투수</th><th>이닝</th><th>자책점</th><th>피안타</th><th>삼진</th><th>방어율</th></tr>';pa.forEach((p,i)=>h+='<tr><td>'+(i+1)+'</td><td>'+esc(p.name)+'</td><td>'+p.ip+'</td><td>'+p.er+'</td><td>'+p.ph+'</td><td>'+p.pk+'</td><td>'+(p.ip?(p.er*9/p.ip).toFixed(2):'-')+'</td></tr>');if(!pa.length)h+='<tr><td colspan="7">기록이 아직 없습니다.</td></tr>';h+='</table></div><p class="muted">현재는 경기방에 입력된 선수 기록을 합산해 순위를 계산합니다.</p></div>';$('#app').innerHTML=h}
+function renderAlarms(){let h='<div class="section-title"><h2>경기 일정 및 공지</h2>'+(edit?btn('+ 알림 등록','newAlarm','primary'):'')+'</div>';if(!state.alarms.length)h+='<div class="panel empty">등록된 경기 일정이나 공지가 없습니다.</div>';state.alarms.slice().sort((a,b)=>a.date.localeCompare(b.date)).forEach(a=>h+='<div class="panel alarm"><div class="muted">'+esc(a.date)+' '+esc(a.time)+' · '+esc(a.place)+'</div><h3>'+esc(a.title)+'</h3><p>'+esc(a.note).replace(/\n/g,'<br>')+'</p>'+(edit?btn('삭제','delAlarm','danger small'):'')+'</div>');$('#app').innerHTML=h}
+document.addEventListener('click',e=>{let b=e.target.closest('[data-tab]');if(b){tab=b.dataset.tab;opened=null;render();return}let o=e.target.closest('[data-open]');if(o){opened=Number(o.dataset.open);render();return}let a=e.target.closest('[data-action]');if(!a)return;let f=a.dataset.action;if(f==='new')makeRoom();if(f==='back'){opened=null;render()}if(f==='deleteRoom'&&confirm('이 경기방을 삭제할까요?')){state.rooms=state.rooms.filter(x=>x.id!==opened);opened=null;save();render()}if(f==='addBatter'){room().players.push(newPlayer());save();render()}if(f==='addPitcher'){room().pitchers.push({name:'',ip:0,er:0,ph:0,pk:0});save();render()}if(f==='newAlarm'){let title=prompt('경기 또는 공지 제목');if(title){state.alarms.push({date:prompt('날짜 (YYYY-MM-DD)',new Date().toISOString().slice(0,10))||'',time:prompt('시간','')||'',place:prompt('장소','')||'',title,note:prompt('공지 내용','')||''});save();render()}}if(f==='delAlarm'){let idx=[...document.querySelectorAll('[data-action="delAlarm"]')].indexOf(a);let items=state.alarms.slice().sort((x,y)=>x.date.localeCompare(y.date));let target=items[idx];if(target&&confirm('이 알림을 삭제할까요?')){state.alarms=state.alarms.filter(x=>x!==target);save();render()}}});
+document.addEventListener('change',e=>{let x=e.target,r=room();if(!edit)return;if(x.dataset.key&&r){r[x.dataset.key]=x.value;save()}if(x.dataset.score&&r){r[x.dataset.score==='home'?'scoreHome':'scoreAway'][Number(x.dataset.i)]=x.value;save();renderRoomsIfOpen()}if(x.dataset.player&&r){r.players[Number(x.dataset.i)][x.dataset.player]=x.dataset.player==='name'?x.value:Number(x.value);save()}if(x.dataset.pitcher&&r){r.pitchers[Number(x.dataset.i)][x.dataset.pitcher]=x.dataset.pitcher==='name'?x.value:Number(x.value);save()}});
+function renderRoomsIfOpen(){if(tab==='rooms'&&opened!==null)renderRooms()}
+$('#login').addEventListener('click',()=>{if(edit){edit=false;render();return}let p=prompt('편집 모드 비밀번호를 입력하세요');if(p===PIN){edit=true;render()}else if(p!==null)alert('비밀번호가 맞지 않습니다.')});
+render();
+</script></body></html>
