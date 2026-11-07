@@ -10,7 +10,7 @@
 const KEY='diamond_new_record_room_v1', PIN='0701';
 const $=s=>document.querySelector(s);
 let state=load(), edit=false, tab='rooms', opened=null;
-function load(){try{return JSON.parse(localStorage.getItem(KEY))||{rooms:[],alarms:[]}}catch(e){return{rooms:[],alarms:[]}}}
+function load(){let s;try{s=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){s={}}if(!Array.isArray(s.rooms))s.rooms=[];if(!Array.isArray(s.alarms))s.alarms=[];s.rooms=s.rooms.map(r=>{r=r&&typeof r==='object'?r:{};if(!Array.isArray(r.scoreHome))r.scoreHome=Array(9).fill('');if(!Array.isArray(r.scoreAway))r.scoreAway=Array(9).fill('');if(!Array.isArray(r.players))r.players=[];if(!Array.isArray(r.pitchers))r.pitchers=[];if(typeof r.home!=='string')r.home='두산 베어스';if(typeof r.away!=='string')r.away='키움 히어로즈';return r});return s}
 function save(){localStorage.setItem(KEY,JSON.stringify(state))}
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function field(label,key,value,type='text'){return '<label class="field">'+label+'<input data-key="'+key+'" type="'+type+'" value="'+esc(value)+'" '+(!edit?'disabled':'')+'></label>'}
