@@ -17,7 +17,7 @@ function field(label,key,value,type='text'){return '<label class="field">'+label
 const TEAMS=['KT 위즈','두산 베어스','키움 히어로즈'];
 function teamField(label,key,value){return '<label class="field">'+label+'<select data-key="'+key+'" '+(!edit?'disabled':'')+'>'+TEAMS.map(t=>'<option '+(t===value?'selected':'')+'>'+t+'</option>').join('')+'</select></label>'}
 
-function btn(label,fn,cls=''){return '<button class="'+cls+'" data-action="'+fn+'">'+label+'</button>'}
+function btn(label,fn,extra=''){let cls=typeof extra==='string'?extra:'';let attrs=extra&&typeof extra==='object'?Object.entries(extra).map(([k,v])=>' data-'+k+'="'+esc(v)+'"').join(''):'';return '<button class="'+cls+'" data-action="'+fn+'"'+attrs+'>'+label+'</button>'}
 function sum(a){return a.reduce((n,x)=>n+(Number(x)||0),0)}
 function newPlayer(){return {name:'',ab:0,h:0,hr:0,rbi:0,bb:0,so:0,r:0,ip:0,er:0,ph:0,pk:0}}
 function makeRoom(){const id=Date.now();state.rooms.unshift({id,name:'새 경기방',date:new Date().toISOString().slice(0,10),opponent:'',venue:'',home:'두산 베어스',away:'키움 히어로즈',scoreHome:Array(9).fill(''),scoreAway:Array(9).fill(''),players:[newPlayer()],pitchers:[]});save();opened=id;render()}
